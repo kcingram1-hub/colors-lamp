@@ -1,0 +1,61 @@
+
+@startuml ActivitDiagram
+title COLORS Web Application - Activity Diagram
+
+start
+
+:Open COLORS web application;
+:Enter login credentials;
+:Submit login request;
+
+:Connect to MySQL database;
+
+if (Database connection successful?) then (Yes)
+  :Search for matching user;
+
+  if (User found?) then (Yes)
+    :Return user information;
+    :Display COLORS interface;
+
+    if (User action?) then (Add Color)
+      :Enter color;
+      :Submit color and user ID;
+      :Connect to MySQL database;
+
+      if (Connection successful?) then (Yes)
+        :Insert color into Colors table;
+        :Return JSON response;
+      else (No)
+        :Return database error;
+      endif
+
+    else (Search Colors)
+      :Enter search term;
+      :Submit search term and user ID;
+      :Connect to MySQL database;
+
+      if (Connection successful?) then (Yes)
+        :Query matching colors;
+
+        if (Matching colors found?) then (Yes)
+          :Return matching colors as JSON;
+        else (No)
+          :Return No Records Found;
+        endif
+
+      else (No)
+        :Return database error;
+      endif
+
+    endif
+
+  else (No)
+    :Return No Records Found;
+  endif
+
+else (No)
+  :Return database error;
+endif
+
+stop
+@enduml

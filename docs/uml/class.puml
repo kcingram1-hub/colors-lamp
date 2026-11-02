@@ -1,0 +1,66 @@
+
+@startuml ClassDiagram
+title COLORS Web Application - Class Diagram
+
+skinparam classAttributeIconSize 0
+left to right direction
+
+class "Frontend (code.js)" as Frontend <<module>> {
+  - userId : Number
+  - firstName : String
+  - lastName : String
+  - urlBase : String
+  - extension : String
+  --
+  + doLogin()
+  + saveCookie()
+  + readCookie()
+  + doLogout()
+  + addColor()
+  + searchColor()
+}
+
+class "Login.php" as Login <<module>> {
+  + getRequestInfo()
+  + sendResultInfoAsJson(obj)
+  + returnWithError(err)
+  + returnWithInfo(firstName, lastName, id)
+}
+
+class "AddColor.php" as AddColor <<module>> {
+  + getRequestInfo()
+  + sendResultInfoAsJson(obj)
+  + returnWithError(err)
+}
+
+class "SearchColors.php" as SearchColors <<module>> {
+  + getRequestInfo()
+  + sendResultInfoAsJson(obj)
+  + returnWithError(err)
+  + returnWithInfo(searchResults)
+}
+
+class "MySQL Database" as DB <<database>> {
+  Colors
+  Users
+}
+
+Frontend ..> Login : HTTP POST / Login
+Frontend ..> AddColor : HTTP POST / AddColor
+Frontend ..> SearchColors : HTTP POST / SearchColors
+
+Login ..> DB : SELECT user
+AddColor ..> DB : INSERT color
+SearchColors ..> DB : SELECT colors
+
+note bottom of Frontend
+  JavaScript functions,
+  not an actual JS class.
+end note
+
+note bottom of DB
+  Database tables are shown
+  conceptually, not as classes.
+end note
+
+@enduml
