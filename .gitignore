@@ -16,3 +16,9 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.log
+
+# Node.js dependencies
+node_modules/
+
+# npm debug logs
+npm-debug.log*
